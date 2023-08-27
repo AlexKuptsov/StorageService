@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class='container has-text-centered'>
+    <div class='columns is-mobile is-centered'>
+      <div class='column is-7'>
+        <div>
+          <h1 class='title'>Товар на складі</h1>
+            <a href="{{ url_for('storage.add_product') }}" class="button is-medium is-primary">
+                Додати новий товар
+            </a>
+          <hr>
+        </div>
+        <div>
+            <table class="table is-bordered">
+              <thead>
+                <tr>
+                  <th>Назва</th>
+                  <th>Кількість</th>
+                  <th>Коментар</th>
+                  <th>Ціна за штуку</th>
+                  <th>Сума</th>
+                  <th>Продати</th>
+                  <th>Видалити</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for product in product_list %}
+                <tr>
+                  <th>{{ product.title }}</th>
+                  <td>{{ product.count }}</td>
+                  <td>{{ product.description }}</td>
+                  <td>{{ product.price }}</td>
+                  <td>{{ (product.price * product.count)|round(3) }}</td>
+                    <td>
+                       <a href="{{ url_for('storage.add_sell', product_id=product.id) }}" class="button is-success is-small">
+                            Внести продажі
+                        </a>
+                    </td>
+                    <td>
+                       <a href="{{ url_for('storage.delete_product', product_id=product.id) }}" class="button is-danger is-small">
+                            Видалити
+                        </a>
+                    </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

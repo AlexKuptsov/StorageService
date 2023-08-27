@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Привіт, {{ name }}!
+</h1>
+
+<div class="box">
+    <h2 class="subtitle">Статистика по користувачу</h2>
+    <form action="{{ url_for('main.statistics') }}" method="GET">
+        <div class="field has-addons">
+            <div class="control">
+                <label class="label">Фільтер по місяцям:</label>
+            </div>
+            <div class="control">
+                <input class="input" type="month" name="filter_month" value="{{ filter_month }}">
+            </div>
+            <div class="control">
+                <button type="submit" class="button is-primary">Фільтрувати</button>
+            </div>
+            <div class="control">
+                <a href="{{ url_for('main.statistics') }}" class="button is-light">Показати всі записи</a>
+            </div>
+        </div>
+    </form>
+    <br>
+    <br>
+    <p>Всього товару продано: {{ total_sell_number }}</p>
+    <p>На суму: {{ total_sell_sum }}</p>
+    {% if total_sell_margin is not none %}
+    <p>Дохід: {{ total_sell_margin|round(3) }}</p>
+    {% else %}
+        <p>Дохід: N/A</p>
+    {% endif %}
+    <br>
+    <br>
+    <div class='container has-text-centered'>
+         <div class='columns is-mobile is-centered'>
+          <div class='column is-7'>
+            <div>
+              <h1>Продажі</h1>
+             <hr>
+             </div>
+            <table class="table is-bordered">
+              <thead>
+                <tr>
+                  <th>Назва</th>
+                  <th>Кількість</th>
+                  <th>Сума</th>
+                  <th>Додаткові витрати</th>
+                  <th>Маржа</th>
+                  <th>Коментар</th>
+                  <th>Дата</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for sell in sell_list %}
+                    <tr>
+                      <th>{{ sell.product_name }}</th>
+                      <td>{{ sell.count }}</td>
+                      <td>{{ sell.summ }}</td>
+                      <td>{{ sell.additional_expanses }}</td>
+                      <td>{{ sell.margin| round(3) }}</td>
+                      <td>{{ sell.comment }}</td>
+                      <td>{{ sell.data }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+         </div>
+    </div>
+</div>
+{% endblock %}

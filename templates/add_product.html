@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Додати новий товар на склад</h1>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="field">
+        <label class="label">Назва</label>
+        <div class="control">
+            {{ form.title(class="input") }}
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Комментар</label>
+        <div class="control">
+            {{ form.description(class="textarea") }}
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Ціна</label>
+        <div class="control">
+            {{ form.price(class="input") }}
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Кількість</label>
+        <div class="control">
+            {{ form.count(class="input") }}
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <button type="submit" class="button is-primary">Додати продукт</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
