@@ -5,54 +5,74 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Flask Auth Example</title>
+    <title>Storage app</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
 </head>
 
 <body>
     <section class="hero is-primary is-fullheight">
 
-        <div class="hero-head">
-            <nav class="navbar">
-                <div class="container">
-                    <div id="navbarMenuHeroA" class="navbar-menu">
-                        <div class="navbar-end">
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('main.statistics') }}" class="navbar-item">
-                                Статистика
-                            </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('storage.storage_list') }}" class="navbar-item">
-                                Склад
-                            </a>
-                            {% endif %}
-                            {% if not current_user.is_authenticated %}
-                            <a href="{{ url_for('auth.login') }}" class="navbar-item">
-                                Вхід
-                            </a>
-                            <a href="{{ url_for('auth.signup') }}" class="navbar-item">
-                                Реєстрація
-                            </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('auth.logout') }}" class="navbar-item">
-                                Вийти
-                            </a>
-                            {% endif %}
-                        </div>
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <!-- Navbar Burger Icon -->
+                    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenuHero">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                <!-- Actual Navbar Menu -->
+                <div id="navbarMenuHero" class="navbar-menu">
+                    <div class="navbar-end">
+                        <!-- Navigation items -->
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.statistics') }}" class="navbar-item">
+                            Статистика
+                        </a>
+                        <a href="{{ url_for('storage.storage_list') }}" class="navbar-item">
+                            Склад
+                        </a>
+                        <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+                            Вийти
+                        </a>
+                        {% else %}
+                        <a href="{{ url_for('auth.login') }}" class="navbar-item">
+                            Вхід
+                        </a>
+                        <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+                            Реєстрація
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
-            </nav>
-        </div>
-
-        <div class="hero-body">
-            <div class="container has-text-centered">
-               {% block content %}
-               {% endblock %}
             </div>
+        </nav>
+    </div>
+
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            {% block content %}
+            {% endblock %}
         </div>
-    </section>
+    </div>
+</section>
+
+<!-- Include Bulma's JavaScript for mobile menu toggling -->
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script>
+    // Add event listener to toggle the mobile menu
+    document.addEventListener('DOMContentLoaded', function () {
+        let burger = document.querySelector('.navbar-burger');
+        let menu = document.querySelector('.navbar-menu');
+        burger.addEventListener('click', function () {
+            burger.classList.toggle('is-active');
+            menu.classList.toggle('is-active');
+        });
+    });
+</script>
+
 </body>
 
 </html>
